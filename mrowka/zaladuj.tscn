@@ -1,0 +1,77 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://czcionka.tres" type="DynamicFont" id=1]
+[ext_resource path="res://wpisuje.gd" type="Script" id=2]
+[ext_resource path="res://tlorozmazane.png" type="Texture" id=3]
+[ext_resource path="res://zaladuj.gd" type="Script" id=4]
+[ext_resource path="res://bida.gd" type="Script" id=5]
+[ext_resource path="res://muzyczka.ogg" type="AudioStream" id=6]
+
+[node name="zaladuj" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="tlorozmazane" type="Sprite" parent="."]
+position = Vector2( 576, 288 )
+texture = ExtResource( 3 )
+
+[node name="Id" type="Label" parent="."]
+margin_right = 448.0
+margin_bottom = 64.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 1, 0.584314, 0, 1 )
+text = "Insert the level's id:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="wpisuje" type="Label" parent="."]
+margin_top = 64.0
+margin_right = 384.0
+margin_bottom = 126.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 1, 0.584314, 0, 1 )
+autowrap = true
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="czasownik" type="Timer" parent="wpisuje"]
+wait_time = 0.2
+one_shot = true
+
+[node name="bida" type="Label" parent="."]
+visible = false
+margin_right = 1152.0
+margin_bottom = 384.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 1, 0.584314, 0, 1 )
+text = "Unfortunately, there is no such id"
+align = 1
+valign = 1
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="kontynuuj" type="MenuButton" parent="."]
+visible = false
+margin_top = 384.0
+margin_right = 1152.0
+margin_bottom = 576.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 1, 0.584314, 0, 1 )
+text = "Continue"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+volume_db = 1.0
+autoplay = true
+[connection signal="bida" from="." to="bida" method="_on_zaladuj_bida"]
+[connection signal="gui_input" from="wpisuje" to="wpisuje" method="_on_wpisuje_gui_input"]
+[connection signal="sprawdz" from="wpisuje" to="." method="_on_wpisuje_sprawdz"]
+[connection signal="timeout" from="wpisuje/czasownik" to="wpisuje" method="_on_czasownik_timeout"]
+[connection signal="gui_input" from="kontynuuj" to="bida" method="_on_kontynuuj_gui_input"]
