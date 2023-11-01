@@ -1,0 +1,5 @@
+[gd_resource type="StreamTexture" format=2]
+
+[resource]
+flags = 4
+load_path = "res://.import/bialy.png-c1ea5581f24af29e21dae314f38f0f54.stex"
